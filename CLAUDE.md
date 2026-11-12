@@ -32,3 +32,12 @@ This is a fresh project built from scratch.
 - Download library: io.github.junkfood02.youtubedl-android (modules library and ffmpeg) from Maven Central. It is GPL-3.0, so this app is GPL-3.0.
 - No Android Studio on this machine. Command-line Gradle only. Targets: minSdk 24, targetSdk = newest installed platform.
 - Start with modules app, downloader and verify only. No Room, no Hilt in v1.
+
+## Verified build versions (Nov 2026, from the official AGP 9.4.0 release notes)
+- Android Gradle Plugin 9.4.0 needs Gradle 9.6.0, JDK 17+, SDK Build Tools 36.0.0, supports up to API 37.
+- Make the wrapper: /home/eclipse/tools/gradle-8.10/bin/gradle wrapper --gradle-version 9.6.0
+- Before writing build files, read https://developer.android.com/build/releases/agp-9-4-0-release-notes and the AGP 9 migration notes (Kotlin plugin setup changed). Do not guess.
+- Use Kotlin DSL (.kts), plugins blocks and a version catalog (gradle/libs.versions.toml).
+- gradle.properties: org.gradle.jvmargs=-Xmx1024m -Dfile.encoding=UTF-8, org.gradle.workers.max=2, kotlin.daemon.jvmargs=-Xmx768m, org.gradle.caching=true. Never 2048m (machine has 3.7 GB RAM).
+- Download library: io.github.junkfood02.youtubedl-android:library and :ffmpeg, version 0.18.1, Maven Central.
+- After writing any version number or dependency, print the file with cat so the numbers can be checked.
