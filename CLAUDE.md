@@ -41,3 +41,9 @@ This is a fresh project built from scratch.
 - gradle.properties: org.gradle.jvmargs=-Xmx1024m -Dfile.encoding=UTF-8, org.gradle.workers.max=2, kotlin.daemon.jvmargs=-Xmx768m, org.gradle.caching=true. Never 2048m (machine has 3.7 GB RAM).
 - Download library: io.github.junkfood02.youtubedl-android:library and :ffmpeg, version 0.18.1, Maven Central.
 - After writing any version number or dependency, print the file with cat so the numbers can be checked.
+
+## Build baseline (working)
+- Project was created with `android create` (official template), then upgraded to AGP 9.4.0 and Gradle 9.6.0 (wrapper checksum pinned and checked against services.gradle.org). compileSdk 37, minSdk 24.
+- Do not change plugin, Gradle, Kotlin or SDK versions unless a build error requires it. Say why and show the file after changing.
+- Work in small steps. After each step run ./gradlew assembleDebug, install with adb, and stop for me to check on the phone.
+- Do not rewrite build files wholesale. Edit only the lines needed.
