@@ -26,3 +26,9 @@ This is a fresh project built from scratch.
 ## Release
 - v1 is download only. File converter comes in a later update.
 - Distribute through GitHub Releases only.
+
+## Dependencies and license
+- Never invent library names or versions. Take coordinates from the library's official README or Maven Central and show the source.
+- Download library: io.github.junkfood02.youtubedl-android (modules library and ffmpeg) from Maven Central. It is GPL-3.0, so this app is GPL-3.0.
+- No Android Studio on this machine. Command-line Gradle only. Targets: minSdk 24, targetSdk = newest installed platform.
+- Start with modules app, downloader and verify only. No Room, no Hilt in v1.
