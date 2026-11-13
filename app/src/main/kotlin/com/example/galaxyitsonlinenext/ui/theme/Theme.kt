@@ -24,17 +24,25 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
+// Glass UI tokens
+val GlassAccent = Color(0xFF8B7CFF)
+val GlassCardBackground = Color(0xFFFFFFFF).copy(alpha = 0.10f)
+val GlassCardBorder = Color(0xFFFFFFFF).copy(alpha = 0.20f)
+val GlassInputBackground = Color(0xFFFFFFFF).copy(alpha = 0.08f)
+val GlassInputBorder = Color(0xFFFFFFFF).copy(alpha = 0.20f)
+
 private val DarkColorScheme = darkColorScheme(
-    primary = primaryDark,
+    primary = GlassAccent,
     primaryContainer = primaryContainerDark,
     secondary = secondaryDark,
     tertiary = tertiaryDark
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = primaryLight,
+    primary = GlassAccent,
     primaryContainer = primaryContainerLight,
     secondary = secondaryLight,
     tertiary = tertiaryLight

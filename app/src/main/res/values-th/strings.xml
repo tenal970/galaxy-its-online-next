@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Galaxy it’s online next</string>
+    <string name="home_input_placeholder">วางหรือพิมพ์ลิงก์ที่นี่</string>
+    <string name="home_btn_paste">วาง</string>
+    <string name="home_btn_check_link">ตรวจสอบลิงก์</string>
+    <string name="home_status_invalid_url">โปรดระบุลิงก์ที่ถูกต้อง</string>
+</resources>

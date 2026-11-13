@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Galaxy it’s online next</string>
+    <string name="home_input_placeholder">Paste or enter link here</string>
+    <string name="home_btn_paste">Paste</string>
+    <string name="home_btn_check_link">Check link</string>
+    <string name="home_status_invalid_url">Please enter a valid link</string>
 </resources>
