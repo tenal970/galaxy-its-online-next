@@ -18,7 +18,9 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -63,6 +65,7 @@ fun MainScreen(
   )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GlassHomeScreen(
   modifier: Modifier = Modifier,
@@ -70,6 +73,9 @@ fun GlassHomeScreen(
 ) {
   var urlInput by rememberSaveable { mutableStateOf("") }
   var errorMessage by rememberSaveable { mutableStateOf<String?>(null) }
+  var showOptionsSheet by rememberSaveable { mutableStateOf(false) }
+  var selectedFormat by rememberSaveable { mutableStateOf("MP4") }
+  var selectedQuality by rememberSaveable { mutableStateOf("Best") }
   val clipboard = LocalClipboard.current
   val coroutineScope = rememberCoroutineScope()
   val invalidUrlText = stringResource(R.string.home_status_invalid_url)
@@ -135,8 +141,8 @@ fun GlassHomeScreen(
         keyboardActions = KeyboardActions(
           onDone = {
             val trimmed = urlInput.trim()
-            if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
-              onCheckLink(trimmed)
+            if (trimmed.startsWith("https://")) {
+              showOptionsSheet = true
             } else {
               errorMessage = invalidUrlText
             }
@@ -202,8 +208,8 @@ fun GlassHomeScreen(
         Button(
           onClick = {
             val trimmed = urlInput.trim()
-            if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
-              onCheckLink(trimmed)
+            if (trimmed.startsWith("https://")) {
+              showOptionsSheet = true
             } else {
               errorMessage = invalidUrlText
             }
@@ -223,6 +229,178 @@ fun GlassHomeScreen(
           )
         }
       }
+    }
+  }
+
+  if (showOptionsSheet) {
+    ModalBottomSheet(
+      onDismissRequest = { showOptionsSheet = false },
+      containerColor = Color(0xFF16122C),
+      shape = RoundedCornerShape(topStart = 26.dp, topEnd = 26.dp),
+      dragHandle = null
+    ) {
+      Column(
+        modifier = Modifier
+          .fillMaxWidth()
+          .padding(horizontal = 24.dp, vertical = 24.dp),
+        horizontalAlignment = Alignment.Start
+      ) {
+        Text(
+          text = stringResource(R.string.options_title),
+          style = MaterialTheme.typography.titleMedium.copy(
+            fontWeight = FontWeight.Medium,
+            color = Color.White
+          )
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text(
+          text = stringResource(R.string.options_format_label),
+          style = MaterialTheme.typography.bodyMedium.copy(
+            color = Color.White.copy(alpha = 0.70f)
+          )
+        )
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+          GlassChoiceChip(
+            text = stringResource(R.string.options_format_mp4),
+            selected = selectedFormat == "MP4",
+            onClick = { selectedFormat = "MP4" }
+          )
+          GlassChoiceChip(
+            text = stringResource(R.string.options_format_mp3),
+            selected = selectedFormat == "MP3",
+            onClick = { selectedFormat = "MP3" }
+          )
+        }
+
+        if (selectedFormat == "MP4") {
+          Spacer(modifier = Modifier.height(20.dp))
+
+          Text(
+            text = stringResource(R.string.options_quality_label),
+            style = MaterialTheme.typography.bodyMedium.copy(
+              color = Color.White.copy(alpha = 0.70f)
+            )
+          )
+
+          Spacer(modifier = Modifier.height(8.dp))
+
+          Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+          ) {
+            GlassChoiceChip(
+              text = stringResource(R.string.options_quality_best),
+              selected = selectedQuality == "Best",
+              onClick = { selectedQuality = "Best" }
+            )
+            GlassChoiceChip(
+              text = stringResource(R.string.options_quality_high),
+              selected = selectedQuality == "1080p",
+              onClick = { selectedQuality = "1080p" }
+            )
+            GlassChoiceChip(
+              text = stringResource(R.string.options_quality_medium),
+              selected = selectedQuality == "720p",
+              onClick = { selectedQuality = "720p" }
+            )
+          }
+        }
+
+        Spacer(modifier = Modifier.height(28.dp))
+
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+          OutlinedButton(
+            onClick = { showOptionsSheet = false },
+            modifier = Modifier
+              .weight(1f)
+              .height(48.dp),
+            shape = RoundedCornerShape(50),
+            border = BorderStroke(1.dp, GlassCardBorder),
+            colors = ButtonDefaults.outlinedButtonColors(
+              containerColor = Color.White.copy(alpha = 0.08f),
+              contentColor = Color.White
+            )
+          ) {
+            Text(
+              text = stringResource(R.string.options_btn_cancel),
+              fontWeight = FontWeight.Medium
+            )
+          }
+
+          Button(
+            onClick = { showOptionsSheet = false },
+            modifier = Modifier
+              .weight(1f)
+              .height(48.dp),
+            shape = RoundedCornerShape(50),
+            colors = ButtonDefaults.buttonColors(
+              containerColor = GlassAccent,
+              contentColor = Color.White
+            )
+          ) {
+            Text(
+              text = stringResource(R.string.options_btn_download),
+              fontWeight = FontWeight.Medium
+            )
+          }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+      }
+    }
+  }
+}
+
+@Composable
+private fun GlassChoiceChip(
+  text: String,
+  selected: Boolean,
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier
+) {
+  if (selected) {
+    Button(
+      onClick = onClick,
+      shape = RoundedCornerShape(50),
+      colors = ButtonDefaults.buttonColors(
+        containerColor = GlassAccent,
+        contentColor = Color.White
+      ),
+      modifier = modifier.height(40.dp)
+    ) {
+      Text(
+        text = text,
+        fontWeight = FontWeight.Medium,
+        fontSize = 13.sp
+      )
+    }
+  } else {
+    OutlinedButton(
+      onClick = onClick,
+      shape = RoundedCornerShape(50),
+      border = BorderStroke(1.dp, GlassCardBorder),
+      colors = ButtonDefaults.outlinedButtonColors(
+        containerColor = GlassInputBackground,
+        contentColor = Color.White.copy(alpha = 0.85f)
+      ),
+      modifier = modifier.height(40.dp)
+    ) {
+      Text(
+        text = text,
+        fontWeight = FontWeight.Normal,
+        fontSize = 13.sp
+      )
     }
   }
 }

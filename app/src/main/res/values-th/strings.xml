@@ -4,4 +4,14 @@
     <string name="home_btn_paste">วาง</string>
     <string name="home_btn_check_link">ตรวจสอบลิงก์</string>
     <string name="home_status_invalid_url">โปรดระบุลิงก์ที่ถูกต้อง</string>
+    <string name="options_title">ตัวเลือกการดาวน์โหลด</string>
+    <string name="options_format_label">รูปแบบไฟล์</string>
+    <string name="options_format_mp4">MP4 วิดีโอ</string>
+    <string name="options_format_mp3">MP3 เสียง</string>
+    <string name="options_quality_label">คุณภาพ</string>
+    <string name="options_quality_best">สูงสุด</string>
+    <string name="options_quality_high">1080p</string>
+    <string name="options_quality_medium">720p</string>
+    <string name="options_btn_download">ดาวน์โหลด</string>
+    <string name="options_btn_cancel">ยกเลิก</string>
 </resources>
